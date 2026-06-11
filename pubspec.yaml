@@ -1,0 +1,41 @@
+name: protectbro
+description: A new Flutter project.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  firebase_core: ^3.11.0
+  cloud_firestore: ^5.6.3
+  shared_preferences: ^2.3.5
+  intl: ^0.20.2
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.2.1
+  flutter_animate: ^4.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  fake_cloud_firestore: ^3.1.0
+  # השורה שהייתה חסרה:
+  flutter_launcher_icons: ^0.14.3
+
+flutter:
+  uses-material-design: true
+  # אל תשכח להגדיר את תיקיית התמונות כאן:
+  assets:
+    - assets/images/
+
+# הגדרות הלוגו (נשארות בסוף הקובץ)
+flutter_launcher_icons:
+  android: true  # זה יחליף אוטומטית את האייקון הקיים בלי להסתבך עם שמות
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  adaptive_icon_background: "#141A14"
+  adaptive_icon_foreground: "assets/images/app_icon.png"
