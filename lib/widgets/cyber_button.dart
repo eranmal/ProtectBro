@@ -13,7 +13,7 @@ class CyberButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.icon,
-    this.backgroundColor = AppTheme.neonGreen,
+    this.backgroundColor = AppColors.neonGreen,
     this.textColor = Colors.black,
   });
 
@@ -42,11 +42,10 @@ class CyberButton extends StatelessWidget {
         icon: icon != null
             ? Icon(icon, color: textColor)
             : const SizedBox.shrink(),
-        label: Text(text,
-            style: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w900, letterSpacing: 1)),
+        label: Text(text, style: AppTextTheme.buttonText),
         onPressed: onPressed,
       ),
     );
   }
 }
+

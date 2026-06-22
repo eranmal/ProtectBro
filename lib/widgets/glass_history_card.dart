@@ -36,15 +36,16 @@ class GlassHistoryCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: group['isAdmin']
-                      ? AppTheme.neonGreen.withValues(alpha: 0.2)
-                      : AppTheme.warningOrange.withValues(alpha: 0.2),
+                      ? AppColors.neonGreen.withValues(alpha: 0.2)
+                      : AppColors.warningOrange.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(group['isAdmin'] ? Icons.star : Icons.shield,
                     color: group['isAdmin']
-                        ? AppTheme.neonGreen
-                        : AppTheme.warningOrange),
+                        ? AppColors.neonGreen
+                        : AppColors.warningOrange),
               ),
+
               title: Text(group['name'],
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,

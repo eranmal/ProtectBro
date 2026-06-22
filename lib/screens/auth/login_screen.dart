@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../widgets/cyber_button.dart';
 import '../../widgets/cyber_text_field.dart';
 import '../../widgets/glass_history_card.dart';
+import '../../theme/app_theme.dart';
 import '../home/main_manager_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,6 +17,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  static const String _groupsCollection = 'groups';
+  static const String _historyKey = 'tactical_history_vFinal';
+
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   List<Map<String, dynamic>> _savedGroups = [];
@@ -28,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _loadHistory() async {
     final prefs = await SharedPreferences.getInstance();
-    final raw = prefs.getString('tactical_history_vFinal');
+    final raw = prefs.getString(_historyKey);
     if (raw != null) {
       setState(() =>
           _savedGroups = List<Map<String, dynamic>>.from(json.decode(raw)));
@@ -39,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final prefs = await SharedPreferences.getInstance();
     _savedGroups.removeWhere((g) => g['id'] == id);
     _savedGroups.insert(0, {'id': id, 'name': name, 'isAdmin': isAdmin});
-    await prefs.setString('tactical_history_vFinal', json.encode(_savedGroups));
+    await prefs.setString(_historyKey, json.encode(_savedGroups));
     if (!mounted) return;
     Navigator.push(
         context,
@@ -87,30 +91,32 @@ class _LoginScreenState extends State<LoginScreen> {
                             setStateDialog(() => isVerifying = true);
                             try {
                               var doc = await FirebaseFirestore.instance
-                                  .collection('groups')
+                                  .collection(_groupsCollection)
                                   .doc(group['id'])
                                   .get();
                               if (doc.exists) {
                                 String expectedCode = group['isAdmin']
                                     ? doc['adminCode']
                                     : doc['userCode'];
+                                if (!context.mounted) return;
                                 if (verifyController.text == expectedCode) {
-                                  Navigator.pop(c);
+                                  if (c.mounted) Navigator.pop(c);
                                   _completeLogin(group['id'], group['name'],
                                       group['isAdmin']);
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                           content: Text("קוד שגוי"),
-                                          backgroundColor: Colors.red));
+                                          backgroundColor: AppColors.alertRed));
                                   setStateDialog(() => isVerifying = false);
                                 }
                               } else {
+                                if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content: Text(
                                             "היחידה לא נמצאה במסד הנתונים"),
-                                        backgroundColor: Colors.red));
+                                        backgroundColor: AppColors.alertRed));
                                 setStateDialog(() => isVerifying = false);
                               }
                             } catch (e) {
@@ -128,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_nameController.text.isEmpty) return;
     String ac = (100000 + Random().nextInt(899999)).toString();
     String uc = (100000 + Random().nextInt(899999)).toString();
-    var d = await FirebaseFirestore.instance.collection('groups').add({
+    var d = await FirebaseFirestore.instance.collection(_groupsCollection).add({
       'groupName': _nameController.text,
       'adminCode': ac,
       'userCode': uc,
@@ -173,11 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Positioned.fill(
             child: Container(
               decoration: const BoxDecoration(
-                gradient: RadialGradient(
-                  colors: [Color(0xFF0F2012), Color(0xFF090D09)],
-                  center: Alignment.topCenter,
-                  radius: 1.5,
-                ),
+                gradient: AppColors.backgroundGradient,
               ),
             ),
           ),
@@ -194,14 +196,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF00FF87).withValues(alpha: 0.3),
+                          color: AppColors.neonGreen.withValues(alpha: 0.3),
                           blurRadius: 40,
                           spreadRadius: 10,
                         ),
                       ],
                     ),
                     child: const Icon(Icons.military_tech,
-                        size: 90, color: Color(0xFF00FF87)),
+                        size: 90, color: AppColors.neonGreen),
                   )
                       .animate(
                           onPlay: (controller) =>
@@ -224,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 8),
                   Text("TACTICAL SHIFT MANAGER",
                           style: TextStyle(
-                              color: const Color(0xFF00FF87).withValues(alpha: 0.8),
+                              color: AppColors.neonGreen.withValues(alpha: 0.8),
                               letterSpacing: 2))
                       .animate()
                       .fadeIn(delay: 400.ms),
@@ -246,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onDelete: () async {
                             setState(() => _savedGroups.remove(g));
                             final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString('tactical_history_vFinal',
+                            await prefs.setString(_historyKey,
                                 json.encode(_savedGroups));
                           },
                         )),
@@ -265,7 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       icon: Icons.login,
                       onPressed: () async {
                         var a = await FirebaseFirestore.instance
-                            .collection('groups')
+                            .collection(_groupsCollection)
                             .where('adminCode', isEqualTo: _codeController.text)
                             .get();
                         if (a.docs.isNotEmpty) {
@@ -274,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           return;
                         }
                         var u = await FirebaseFirestore.instance
-                            .collection('groups')
+                            .collection(_groupsCollection)
                             .where('userCode', isEqualTo: _codeController.text)
                             .get();
                         if (u.docs.isNotEmpty) {
@@ -282,11 +284,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               u.docs.first['groupName'], false);
                           return;
                         }
-                        if (mounted) {
+                        if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text("קוד גישה שגוי"),
-                                  backgroundColor: Colors.redAccent));
+                                  backgroundColor: AppColors.alertRed));
                         }
                       }).animate().fadeIn(delay: 1000.ms).slideX(begin: 0.2),
                   const SizedBox(height: 40),
@@ -302,10 +304,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextButton.icon(
                     onPressed: _createNewGroup,
                     icon: const Icon(Icons.add_circle_outline,
-                        color: Color(0xFF00B8FF)),
+                        color: AppColors.neonBlue),
                     label: const Text("הקם חמ\"ל חדש",
                         style: TextStyle(
-                            color: Color(0xFF00B8FF),
+                            color: AppColors.neonBlue,
                             fontWeight: FontWeight.bold)),
                   ).animate().fadeIn(delay: 1400.ms),
                   const SizedBox(height: 40),

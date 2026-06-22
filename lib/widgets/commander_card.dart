@@ -12,32 +12,33 @@ class CommanderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(16),
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
-        BoxShadow(
-            color: AppTheme.neonGreen.withValues(alpha: 0.2),
-            blurRadius: 20,
-            spreadRadius: 2)
-      ]),
+      decoration: AppComponentThemes.commanderCardDecoration,
       child: Card(
-          color: AppTheme.surfaceColor,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-              side: const BorderSide(color: AppTheme.neonGreen, width: 1.5),
-              borderRadius: BorderRadius.circular(16)),
-          child: ListTile(
-              leading: const Icon(Icons.military_tech,
-                  color: AppTheme.neonGreen, size: 40),
-              title: const Text("מפקד תורן (חמ\"ל)",
-                  style: TextStyle(color: Colors.white54, fontSize: 12)),
-              subtitle: Text(commander.name,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1)))),
+        color: AppColors.surfaceColor,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          side: AppComponentThemes.commanderCardBorderSide,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: ListTile(
+          leading: const Icon(
+            Icons.military_tech,
+            color: AppColors.neonGreen,
+            size: 40,
+          ),
+          title: const Text(
+            "מפקד תורן (חמ\"ל)",
+            style: AppTextTheme.commanderTitle,
+          ),
+          subtitle: Text(
+            commander.name,
+            style: AppTextTheme.commanderSubtitle,
+          ),
+        ),
+      ),
     )
         .animate(onPlay: (controller) => controller.repeat(reverse: true))
         .shimmer(duration: 3.seconds, color: Colors.white10);
   }
 }
+

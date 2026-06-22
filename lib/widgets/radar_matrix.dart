@@ -39,10 +39,7 @@ class RadarMatrix extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: DataTable(
-              headingTextStyle: const TextStyle(
-                  color: AppTheme.neonBlue,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1),
+              headingTextStyle: AppTextTheme.radarHeading,
               dataTextStyle: const TextStyle(color: Colors.white),
               dividerThickness: 0.2,
               columns: [
@@ -54,24 +51,20 @@ class RadarMatrix extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
-                                color: AppTheme.neonBlue.withValues(alpha: 0.1),
+                                color: AppColors.neonBlue.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                    color: AppTheme.neonBlue.withValues(alpha: 0.3))),
+                                    color: AppColors.neonBlue.withValues(alpha: 0.3))),
                             child: Row(children: [
                               Text(s.name),
                               const SizedBox(width: 4),
                               const Icon(Icons.radar,
-                                  size: 14, color: AppTheme.neonBlue)
+                                  size: 14, color: AppColors.neonBlue)
                             ])))))
               ],
               rows: sTimes
                   .map((t) => DataRow(cells: [
-                        DataCell(Text(t,
-                            style: const TextStyle(
-                                color: AppTheme.neonGreen,
-                                fontWeight: FontWeight.w900,
-                                fontFamily: 'monospace'))),
+                        DataCell(Text(t, style: AppTextTheme.radarTime)),
                         ...stations.map((s) {
                           final shift = docs
                               .where((d) =>
@@ -92,7 +85,7 @@ class RadarMatrix extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: isEditMode
-                                          ? AppTheme.warningOrange
+                                          ? AppColors.warningOrange
                                           : Colors.white70))));
                         })
                       ]))
