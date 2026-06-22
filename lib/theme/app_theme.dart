@@ -31,13 +31,13 @@ class AppTheme {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
       ),
-      dialogBackgroundColor: surfaceColor,
       cardTheme: CardThemeData(
         color: surfaceColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
       ),
+      dialogTheme: DialogThemeData(backgroundColor: surfaceColor),
     );
   }
 

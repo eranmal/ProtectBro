@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Guard {
   final String id;
   final String name;
@@ -7,7 +5,7 @@ class Guard {
   int totalDifficultyScore;
   DateTime lastShiftEnd;
   bool isActive;
-  bool isCommander; // שדה מפקד
+  bool isCommander;
 
   Guard({
     required this.id,
@@ -20,11 +18,14 @@ class Guard {
   });
 
   Guard copy() => Guard(
-    id: id, name: name, totalShifts: totalShifts, 
-    totalDifficultyScore: totalDifficultyScore, 
-    lastShiftEnd: lastShiftEnd, isActive: isActive,
-    isCommander: isCommander,
-  );
+        id: id,
+        name: name,
+        totalShifts: totalShifts,
+        totalDifficultyScore: totalDifficultyScore,
+        lastShiftEnd: lastShiftEnd,
+        isActive: isActive,
+        isCommander: isCommander,
+      );
 }
 
 class Station {
@@ -38,9 +39,14 @@ class Station {
   final int? maxShiftMinutes;
 
   Station({
-    required this.id, required this.name, required this.difficultyLevel,
-    required this.guardsNeeded, this.isAllDay = true,
-    this.startHour = 0, this.endHour = 24, this.maxShiftMinutes,
+    required this.id,
+    required this.name,
+    required this.difficultyLevel,
+    required this.guardsNeeded,
+    this.isAllDay = true,
+    this.startHour = 0,
+    this.endHour = 24,
+    this.maxShiftMinutes,
   });
 
   int get totalActiveMinutes {
@@ -55,5 +61,9 @@ class ScheduledShift {
   final DateTime end;
   final Station station;
   final List<Guard> assignedGuards;
-  ScheduledShift({required this.start, required this.end, required this.station, required this.assignedGuards});
+  ScheduledShift(
+      {required this.start,
+      required this.end,
+      required this.station,
+      required this.assignedGuards});
 }

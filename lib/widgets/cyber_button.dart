@@ -24,7 +24,7 @@ class CyberButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: backgroundColor.withOpacity(0.3),
+            color: backgroundColor.withValues(alpha: 0.3),
             blurRadius: 15,
             offset: const Offset(0, 5),
           )
@@ -35,11 +35,16 @@ class CyberButton extends StatelessWidget {
           backgroundColor: backgroundColor,
           foregroundColor: textColor,
           minimumSize: const Size(double.infinity, 55),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           elevation: 0,
         ),
-        icon: icon != null ? Icon(icon, color: textColor) : const SizedBox.shrink(),
-        label: Text(text, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900, letterSpacing: 1)),
+        icon: icon != null
+            ? Icon(icon, color: textColor)
+            : const SizedBox.shrink(),
+        label: Text(text,
+            style: const TextStyle(
+                fontSize: 18, fontWeight: FontWeight.w900, letterSpacing: 1)),
         onPressed: onPressed,
       ),
     );

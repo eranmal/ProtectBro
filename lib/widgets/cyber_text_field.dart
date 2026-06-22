@@ -17,16 +17,19 @@ class CyberTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      style: const TextStyle(color: AppTheme.neonGreen, fontWeight: FontWeight.bold, letterSpacing: 2),
+      style: const TextStyle(
+          color: AppTheme.neonGreen,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 2),
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(color: Colors.white54, letterSpacing: 0),
         prefixIcon: Icon(icon, color: Colors.white38),
         filled: true,
-        fillColor: Colors.black.withOpacity(0.4),
+        fillColor: Colors.black.withValues(alpha: 0.4),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

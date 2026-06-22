@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_localizations/flutter_localizations.dart'; 
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/auth/login_screen.dart';
@@ -19,7 +19,7 @@ class ProtectBroApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       locale: const Locale('he', 'IL'),
-      localizationsDelegates: const [ 
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -28,15 +28,16 @@ class ProtectBroApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xFF090D09), // עמוק מאוד, כמעט שחור עם טיפה ירוק
+        scaffoldBackgroundColor: const Color(0xFF090D09),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF00FF87), // ירוק ניאון
+          seedColor: const Color(0xFF00FF87),
           brightness: Brightness.dark,
           primary: const Color(0xFF00FF87),
-          secondary: const Color(0xFF00B8FF), // טורקיז זוהר
-          surface: const Color(0xFF111A11), // רקע לכרטיסיות
+          secondary: const Color(0xFF00B8FF),
+          surface: const Color(0xFF111A11),
         ),
-        textTheme: GoogleFonts.heeboTextTheme(Theme.of(context).textTheme).apply(
+        textTheme:
+            GoogleFonts.heeboTextTheme(Theme.of(context).textTheme).apply(
           bodyColor: Colors.white70,
           displayColor: Colors.white,
         ),
